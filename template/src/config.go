@@ -1,4 +1,4 @@
-package config
+package main
 
 import (
 	"fmt"
@@ -11,8 +11,8 @@ import (
 )
 
 var (
-	// All contains all config
-	All map[string]string
+	// Config contains all config
+	Config map[string]string
 )
 
 func init() {
@@ -23,7 +23,7 @@ func init() {
 		panic(fmt.Sprintf("could not find config file [%s]", configFile))
 	}
 
-	if err := yaml.Unmarshal(bs, &All); err != nil {
+	if err := yaml.Unmarshal(bs, &Config); err != nil {
 		panic(err.Error())
 	}
 	fmt.Println("*************************", "loaded config file at[", configFile, "]*************************")

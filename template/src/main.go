@@ -3,8 +3,6 @@ package main
 import (
 	"log"
 	"os"
-
-	"./config"
 )
 
 func main() {
@@ -17,7 +15,7 @@ func main() {
 	// PORT environment variable was defined.
 	var port string
 	if port = os.Getenv("PORT"); port == "" {
-		port = config.All["port"]
+		port = Config["port"]
 	}
 
 	log.Println("API listening at http://localhost:" + port)
