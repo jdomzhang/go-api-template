@@ -1,9 +1,23 @@
 {
-  "name": "go-api-template",
+  "name": "{{name}}",
   "version": "1.0.0",
-  "description": "A project template for restful service with golang",
-  "main": "index.js",
-  "repository": "git@github.com:jdomzhang/go-api-template.git",
-  "author": "Stetven Zhang",
-  "license": "MIT"
+  "description": "{{description}}",
+  "author": "{{author}}",
+  "private": true,
+  "scripts": {
+    "go": "go run ./src/main.go",
+    "dev": "./build/dev.bat",
+    "test": "go test ./src/... -v",
+    "coverage": "goconvey -workDir src",
+    "build": "./build/build_4_linux.bat",
+    "install:1": "scp -r ./scripts/*.* deploy@xx.com:~/upload/{{name}}/scripts",
+    "install:2": "ssh deploy@xx.com \" sed -i 's/\\r//g' ~/upload/{{name}}/scripts/*.sh & sed -i 's/\\r//g' ~/upload/{{name}}/scripts/*.service \"",
+    "install:3": "ssh deploy@xx.com \" sh ~/upload/{{name}}/scripts/install.sh \"",
+    "upload": "scp -r ./dist/*.gz deploy@xx.com:~/upload/{{name}}/ & ssh deploy@xx.com \"sh ~/upload/{{name}}/scripts/deploy.sh\"",
+    "release": "yarn build & yarn upload"
+  },
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  }
 }

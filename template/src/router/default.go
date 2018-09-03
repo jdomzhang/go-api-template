@@ -1,7 +1,7 @@
 package router
 
 import (
-	"../controllers"
+	"../controller"
 	"../router/middleware"
 	"github.com/gin-gonic/gin"
 )
@@ -11,9 +11,9 @@ func Route() *gin.Engine {
 
 	r.Use(middleware.Authorization())
 
-	r.GET("/", controllers.SayHello)
-	r.GET("/api", controllers.SayHello)
-	r.GET("/api/v1", controllers.SayHello)
+	r.GET("/", controller.SayHello)
+	r.GET("/api", controller.SayHello)
+	r.GET("/api/v1", controller.SayHello)
 	r.Static("/api/v1/static", "./static")
 	r.StaticFile("/favicon.ico", "./static/img/favicon.ico")
 
@@ -21,18 +21,13 @@ func Route() *gin.Engine {
 
 	// Simple group: v1
 	{
-		// v1 := r.Group("/api/v1")
-		// {
-		// 	adminR := v1.Group("/admin")
-		// 	routeAdmin(adminR)
-		// }
 
-		// {
-		// 	userR := v1.Group("/users")
+		{
+			userR := v1.Group("/hello")
 
-		// 	// temp
-		// 	userR.POST("/sendsms", controllers.SendVerifySms)
-		// }
+			// temp
+			userR.POST("/hello", controller.SayHello)
+		}
 
 	}
 

@@ -1,2 +1,5 @@
+JwtSignKey:                   fZxt92jdrSL6DmqGTWKA_test
 dbdriver:                     postgres
 connectionstring:             user={{name}} password={{name}} dbname={{name}} host=localhost port=5432 sslmode=disable
+
+token.expire.minutes:         10080

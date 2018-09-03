@@ -1,0 +1,9 @@
+{
+  "name": "go-api-template",
+  "version": "1.0.0",
+  "description": "A project template for restful service with golang",
+  "main": "index.js",
+  "repository": "git@github.com:jdomzhang/go-api-template.git",
+  "author": "Stetven Zhang",
+  "license": "MIT"
+}

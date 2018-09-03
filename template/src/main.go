@@ -4,14 +4,10 @@ import (
 	"log"
 	"os"
 
-	"./models/orm"
 	"./router"
 )
 
 func main() {
-
-	// this will make sure the db connection is initialized
-	orm.InitDbConnection()
 
 	// Creates a gin router with default middleware:
 	// logger and recovery (crash-free) middleware
