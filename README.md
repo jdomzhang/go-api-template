@@ -1,6 +1,6 @@
 # go-api-template
 
-> A simple Vue 2.0 template for creating restful API project with golang
+> A template for creating go api project, using vue cli
 
 ### Usage
 
@@ -8,8 +8,7 @@ This is a project template.
 
 ``` bash
 $ yarn global add vue-cli
-$ vue init jdomzhang/go-api-template my-api-project
-$ cd my-api-project
-$ yarn
+$ vue init jdomzhang/go-api-template myapi
+$ cd myapi
 $ yarn dev
 ```
