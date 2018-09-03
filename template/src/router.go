@@ -17,13 +17,13 @@ func Route() *gin.Engine {
 
 	// Simple group: v1
 	{
-		v1 := r.Group("/hello")
+		v1 := r.Group("/api/v1")
 
 		{
-			userR := v1.Group("/hello")
+			say := v1.Group("/say")
 
 			// temp
-			userR.POST("/hello", SayHello)
+			say.POST("/hello", SayHello)
 		}
 
 	}
