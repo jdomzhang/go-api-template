@@ -10,10 +10,12 @@
     "test": "go test ./src/... -v",
     "coverage": "goconvey -workDir src",
     "build": "./build/build_4_linux.bat",
-    "install:1": "scp -r ./scripts/*.* deploy@xx.com:~/upload/{{name}}/scripts",
-    "install:2": "ssh deploy@xx.com \" sed -i 's/\\r//g' ~/upload/{{name}}/scripts/*.sh & sed -i 's/\\r//g' ~/upload/{{name}}/scripts/*.service \"",
-    "install:3": "ssh deploy@xx.com \" sh ~/upload/{{name}}/scripts/install.sh \"",
-    "upload": "scp -r ./dist/*.gz deploy@xx.com:~/upload/{{name}}/ & ssh deploy@xx.com \"sh ~/upload/{{name}}/scripts/deploy.sh\"",
+    "upload": "scp -r ./tmp/*.gz root@dongfutech.com:~/upload/portal/ & ssh root@dongfutech.com \"sh ~/upload/portal/scripts/deploy.sh\"",
+    "install:0": "yarn build",
+    "install:1": "ssh root@dongfutech.com \" mkdir -p ~/upload/portal/scripts \" & scp -r ./scripts/*.* root@dongfutech.com:~/upload/portal/scripts",
+    "install:2": "ssh root@dongfutech.com \" sed -i 's/\\r//g' ~/upload/portal/scripts/*.sh & sed -i 's/\\r//g' ~/upload/portal/scripts/*.service \"",
+    "install:3": "ssh root@dongfutech.com \" sh ~/upload/portal/scripts/install.sh \"",
+    "install:4": "yarn upload",
     "release": "yarn build & yarn upload"
   },
   "engines": {

@@ -5,3 +5,4 @@ rm /usr/share/websites/{{name}}/*.tar
 chmod 755 /usr/share/websites/{{name}}/{{name}}
 #PORT=3009 /usr/share/websites/{{name}}/{{name}}
 systemctl start {{name}}
+systemctl status {{name}}
