@@ -1,0 +1,38 @@
+{
+  "prompts": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "label": "Project name (no space)",
+      "default": "{{destDirName}}"
+    },
+    "description": {
+      "type": "string",
+      "required": true,
+      "label": "Project description",
+      "default": "A go API project"
+    },
+    "author": {
+      "type": "string",
+      "label": "Author"
+    },
+    "license": {
+      "type": "string",
+      "label": "License",
+      "default": "MIT"
+    },
+    "apiurl": {
+      "type": "string",
+      "required": true,
+      "label": "API URL",
+      "default": "{{destDirName}}.yourdomain.com"
+    },
+    "serverport": {
+      "type": "number",
+      "required": true,
+      "label": "Server port",
+      "default": 5001
+    }
+  },
+  "completeMessage": "{{#inPlace}}To get started:\n\n  yarn\n  yarn dev{{else}}To get started:\n\n  cd {{destDirName}}\n  yarn\n  yarn dev{{/inPlace}}"
+}

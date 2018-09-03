@@ -1,0 +1,9 @@
+tmp/
+dist/
+src/runner-build*.*
+debug
+debug.test
+.vscode/
+src.exe
+src/init/*.exe
+userdata/
