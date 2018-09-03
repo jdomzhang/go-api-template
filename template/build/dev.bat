@@ -1,2 +1,2 @@
-@set PORT=9090
+@set PORT={{devport}}
 @fresh

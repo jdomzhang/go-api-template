@@ -1,3 +1,3 @@
-@set PORT=9090
+@set PORT={{prodport}}
 @set GIN_MODE=release
 @fresh

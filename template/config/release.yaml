@@ -1,4 +1,5 @@
 # release
+port:                         {{prodport}}
 JwtSignKey:                   c2YtK8XQZEv6mJMkw4d5_release
 dbdriver:                     postgres
 connectionstring:             user={{name}} password={{name}} dbname={{name}} host=localhost port=5432 sslmode=disable

@@ -25,9 +25,15 @@
       "type": "string",
       "required": true,
       "label": "API URL",
-      "default": "{{destDirName}}.yourdomain.com"
+      "default": "api.yourdomain.com"
     },
-    "serverport": {
+    "devport": {
+      "type": "number",
+      "required": true,
+      "label": "Server port",
+      "default": 9090
+    },
+    "prodport": {
       "type": "number",
       "required": true,
       "label": "Server port",

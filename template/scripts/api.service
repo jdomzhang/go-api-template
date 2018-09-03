@@ -9,7 +9,7 @@ Restart=always
 RemainAfterExit=no
 #Type=forking
 Type=simple
-Environment=PORT={{serverport}}
+Environment=PORT={{prodport}}
 Environment=GIN_MODE=release
 WorkingDirectory=/usr/share/websites/{{name}}
 ExecStart=/usr/share/websites/{{name}}/{{name}}

@@ -1,4 +1,5 @@
 # debug
+port:                         {{devport}}
 JwtSignKey:                   naVeh3GAWKtxcsw5jQ9B_debug
 dbdriver:                     postgres
 connectionstring:             user={{name}} password={{name}} dbname={{name}} host=localhost port=5432 sslmode=disable
