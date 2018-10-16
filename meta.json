@@ -46,5 +46,5 @@
       "default": "root@yourdomain.com"
     }
   },
-  "completeMessage": "{{#inPlace}}To get started:\n\n  yarn dev{{else}}To get started:\n\n  cd {{destDirName}}\n  yarn dev{{/inPlace}}"
+  "completeMessage": "{{#inPlace}}To get started:\n\n  yarn dev{{else}}To get started:\n\n  cd {{destDirName}}\n  yarn\n  yarn dev{{/inPlace}}"
 }
