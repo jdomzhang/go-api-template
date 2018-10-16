@@ -30,13 +30,13 @@
     "devport": {
       "type": "number",
       "required": true,
-      "label": "Server port",
+      "label": "Dev Server port",
       "default": 9090
     },
     "prodport": {
       "type": "number",
       "required": true,
-      "label": "Server port",
+      "label": "Prod Server port",
       "default": 5001
     },
     "root": {
