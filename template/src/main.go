@@ -20,6 +20,6 @@ func main() {
 
 	log.Println("API listening at http://localhost:" + port)
 
-	r.Run()
+	r.Run(":" + port)
 
 }
