@@ -38,6 +38,12 @@
       "required": true,
       "label": "Server port",
       "default": 5001
+    },
+    "root": {
+      "type": "string",
+      "required": true,
+      "label": "Root account",
+      "default": "root@yourdomain.com"
     }
   },
   "completeMessage": "{{#inPlace}}To get started:\n\n  yarn dev{{else}}To get started:\n\n  cd {{destDirName}}\n  yarn dev{{/inPlace}}"

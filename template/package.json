@@ -6,17 +6,13 @@
   "private": true,
   "scripts": {
     "go": "go run ./src/main.go",
-    "dev": "./build/dev.bat",
+    "dev": "node ./build/dev.js",
     "test": "go test ./src/... -v",
     "coverage": "goconvey -workDir src",
-    "build": "./build/build_4_linux.bat",
-    "upload": "scp -r ./tmp/*.gz root@dongfutech.com:~/upload/portal/ & ssh root@dongfutech.com \"sh ~/upload/portal/scripts/deploy.sh\"",
-    "install:0": "yarn build",
-    "install:1": "ssh root@dongfutech.com \" mkdir -p ~/upload/portal/scripts \" & scp -r ./scripts/*.* root@dongfutech.com:~/upload/portal/scripts",
-    "install:2": "ssh root@dongfutech.com \" sed -i 's/\\r//g' ~/upload/portal/scripts/*.sh & sed -i 's/\\r//g' ~/upload/portal/scripts/*.service \"",
-    "install:3": "ssh root@dongfutech.com \" sh ~/upload/portal/scripts/install.sh \"",
-    "install:4": "yarn upload",
-    "release": "yarn build & yarn upload"
+    "build": "node ./build/build_4_linux.js",
+    "upload": "node ./build/upload.js",
+    "install:all": "node ./build/install.js",
+    "release": "node ./build/release.js"
   },
   "engines": {
     "node": ">= 6.0.0",
