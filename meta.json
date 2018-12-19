@@ -44,6 +44,12 @@
       "required": true,
       "label": "Root account",
       "default": "root@yourdomain.com"
+    },
+    "gomodule": {
+      "type": "string",
+      "required": true,
+      "label": "Go mod path",
+      "default": "github.com/xxx/{{destDirName}}"
     }
   },
   "completeMessage": "{{#inPlace}}To get started:\n\n  yarn dev{{else}}To get started:\n\n  cd {{destDirName}}\n  yarn\n  yarn dev{{/inPlace}}"

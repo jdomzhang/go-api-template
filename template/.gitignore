@@ -5,5 +5,8 @@ debug
 debug.test
 .vscode/
 src.exe
+src/src
 src/init/*.exe
-userdata/
+main.exe
+userdata/20*
+node_modules/

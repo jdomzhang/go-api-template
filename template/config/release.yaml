@@ -1,7 +1,10 @@
 # release
 port:                         {{prodport}}
-JwtSignKey:                   c2YtK8XQZEv6mJMkw4d5_release
+JwtSignKey:                   xxxxxxxx_release
 dbdriver:                     postgres
 connectionstring:             user={{name}} password={{name}} dbname={{name}} host=localhost port=5432 sslmode=disable
 
-token.expire.minutes:         10080
+token.expire.minutes:         120
+
+wechat.app.appid:             xxxxxxx
+wechat.app.secret:            xxxxxxxxxxxxxxx
