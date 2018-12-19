@@ -87,12 +87,7 @@ func getLoginContext(c *gin.Context) LoginContext {
 	loginContext := LoginContext{
 		IsValid:       ok,
 		UserID:        payload.UserID,
-		AdminID:       payload.AdminID,
 		OpenID:        payload.WechatOpenID,
-		IsSystemAdmin: payload.IsSystemAdmin,
-		IsOperator:    payload.IsOperator,
-		IsSalesPerson: payload.IsSalesPerson,
-		IsValidAdmin:  payload.AdminID > 0 && ok,
 		IsValidUser:   payload.UserID > 0 && ok,
 		Visitor:       payload.Visitor,
 		IsVisitor:     payload.Visitor != "",

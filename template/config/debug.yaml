@@ -2,7 +2,7 @@
 port:                         {{devport}}
 JwtSignKey:                   xxxxxxxx_debug
 dbdriver:                     postgres
-connectionstring:             user={{name}} password={{name}} dbname={{name}} host=localhost port=5432 sslmode=disable
+connectionstring:             user={{dbname}} password={{dbpassword}} dbname={{dbname}} host=localhost port=5432 sslmode=disable
 
 token.expire.minutes:         120
 

@@ -44,6 +44,18 @@
       "required": true,
       "label": "Root account",
       "default": "root@yourdomain.com"
+    },
+    "dbname": {
+      "type": "string",
+      "required": true,
+      "label": "Database name",
+      "default": "{{destDirName}}"
+    },
+    "dbpassword": {
+      "type": "string",
+      "required": true,
+      "label": "Database password",
+      "default": "666666"
     }
   },
   "completeMessage": "{{#inPlace}}To get started:\n\n  yarn dev{{else}}To get started:\n\n  cd {{destDirName}}\n  yarn\n  yarn dev{{/inPlace}}"
