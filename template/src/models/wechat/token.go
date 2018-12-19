@@ -14,15 +14,6 @@ import (
 
 var globalAccessToken string
 
-func init() {
-	go func() {
-		// check every 1 minute
-		for range time.Tick(time.Minute * 1) {
-			getOrRefreshGlobalAccessToken()
-		}
-	}()
-}
-
 // ForceRefreshGlobalAccessToken will set globalAccessToken
 func ForceRefreshGlobalAccessToken() (string, error) {
 	var gat orm.WechatGlobalAccessToken
@@ -39,7 +30,8 @@ func ForceRefreshGlobalAccessToken() (string, error) {
 	return "", fmt.Errorf("ErrorCode: %d, ErrorMsg: %s", gat.ErrCode, gat.ErrMsg)
 }
 
-func getOrRefreshGlobalAccessToken() error {
+// GetOrRefreshGlobalAccessToken will check and refresh wechat access token
+func GetOrRefreshGlobalAccessToken() error {
 	var gat orm.WechatGlobalAccessToken
 	if err := getGlobalAccessTokenFromDB(&gat); err != nil {
 		if err := getGlobalAccessTokenFromWeb(&gat); err != nil {

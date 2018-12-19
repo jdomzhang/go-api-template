@@ -15,7 +15,9 @@ func main() {
 	orm.InitDbConnection()
 
 	// read wechat access token
-	go func() { wechat.ForceRefreshGlobalAccessToken() }()
+	if config.All["wechat.enable"] == "true" {
+		go func() { wechat.ForceRefreshGlobalAccessToken() }()
+	}
 
 	// bg tasks
 	go func() { bg.DailyJob() }()

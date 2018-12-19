@@ -6,5 +6,6 @@ connectionstring:             user={{dbname}} password={{dbpassword}} dbname={{d
 
 token.expire.minutes:         120
 
+wechat.enable:                false
 wechat.app.appid:             xxxxxxx
 wechat.app.secret:            xxxxxxxxxxxxxxx

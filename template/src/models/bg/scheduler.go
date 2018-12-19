@@ -2,6 +2,7 @@ package bg
 
 import (
 	"fmt"
+	"{{name}}/src/config"
 	"{{name}}/src/models/biz"
 
 	"github.com/jasonlvhit/gocron"
@@ -9,7 +10,10 @@ import (
 
 // DailyJob will handle daily task
 func DailyJob() {
-	gocron.Every(1).Day().At("3:00").Do(deleteExpiredFormID)
+	if config.All["wechat.enable"] == "true" {
+		gocron.Every(1).Day().At("3:00").Do(deleteExpiredFormID)
+		gocron.Every(1).Do(wechat.GetOrRefreshGlobalAccessToken)
+	}
 
 	_, time := gocron.NextRun()
 	fmt.Println("################## next bg task will run @", time)
