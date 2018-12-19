@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"{{name}}/src/config"
 	"{{name}}/src/models/biz"
+	"{{name}}/src/models/wechat"
 
 	"github.com/jasonlvhit/gocron"
 )

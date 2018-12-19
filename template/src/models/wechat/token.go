@@ -3,7 +3,6 @@ package wechat
 import (
 	"encoding/json"
 	"fmt"
-	"time"
 	"{{name}}/src/models/orm"
 	"{{name}}/src/util"
 
