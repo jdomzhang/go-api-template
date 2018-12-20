@@ -15,7 +15,7 @@ func Route() *gin.Engine {
 	r.GET("/", controllers.SayHello)
 	r.GET("/api", controllers.SayHello)
 	r.GET("/api/v1", controllers.SayHello)
-	r.POST("/api/v1/hello", controllers.SayHello)
+	r.GET("/api/v1/hello", controllers.SayHello)
 	r.Static("/api/v1/static", "./static")
 	r.StaticFile("/favicon.ico", "./static/img/favicon.ico")
 
