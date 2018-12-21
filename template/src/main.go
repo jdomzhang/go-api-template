@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"{{name}}/src/config"
@@ -15,6 +16,7 @@ func main() {
 	orm.InitDbConnection()
 
 	// read wechat access token
+	fmt.Println("wechat.enable", config.All["wechat.enable"])
 	if config.All["wechat.enable"] == "true" {
 		go func() { wechat.ForceRefreshGlobalAccessToken() }()
 	}

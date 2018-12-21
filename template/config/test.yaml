@@ -1,3 +1,5 @@
+# test
+logsql:                       true
 port:                         {{devport}}
 JwtSignKey:                   xxxxxxxx_test
 dbdriver:                     postgres
@@ -8,3 +10,6 @@ token.expire.minutes:         120
 wechat.enable:                false
 wechat.app.appid:             xxxxxxx
 wechat.app.secret:            xxxxxxxxxxxxxxx
+
+wechat.getaccesstoken.url:    https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s
+wechat.sendmessage.url:       https://api.weixin.qq.com/cgi-bin/message/wxopen/template/uniform_send?access_token=%s

@@ -12,8 +12,8 @@ import (
 // DailyJob will handle daily task
 func DailyJob() {
 	if config.All["wechat.enable"] == "true" {
+		gocron.Every(1).Minute().Do(refreshGlobalAccessToken)
 		gocron.Every(1).Day().At("3:00").Do(deleteExpiredFormID)
-		gocron.Every(1).Do(wechat.GetOrRefreshGlobalAccessToken)
 	}
 
 	_, time := gocron.NextRun()
@@ -27,4 +27,10 @@ func deleteExpiredFormID() {
 	fmt.Println("################### triggered daily task - delete expired form id ####################")
 
 	biz.DeleteExpiredFormID()
+}
+
+func refreshGlobalAccessToken() {
+	fmt.Println("################### triggered task - refresh wechat global access token ####################")
+
+	wechat.GetOrRefreshGlobalAccessToken()
 }

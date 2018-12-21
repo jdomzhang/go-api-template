@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"{{name}}/src/models/orm"
 	"{{name}}/src/util"
+	"log"
 
 	"{{name}}/src/config"
 
@@ -34,6 +35,7 @@ func GetOrRefreshGlobalAccessToken() error {
 	var gat orm.WechatGlobalAccessToken
 	if err := getGlobalAccessTokenFromDB(&gat); err != nil {
 		if err := getGlobalAccessTokenFromWeb(&gat); err != nil {
+			log.Println("error:", err)
 			return err
 		}
 	}
@@ -49,14 +51,21 @@ func GetOrRefreshGlobalAccessToken() error {
 
 func getGlobalAccessTokenFromDB(gat *orm.WechatGlobalAccessToken) error {
 	var entity orm.WechatGlobalAccessToken
-	return entity.GetValidLatest(gat)
+	err := entity.GetValidLatest(gat)
+	if err != nil {
+		log.Println("error:", err)
+	}
+	return err
 }
 
 func getGlobalAccessTokenFromWeb(gat *orm.WechatGlobalAccessToken) error {
 	apiBase := fmt.Sprintf(config.All["wechat.getaccesstoken.url"],
 		config.All["wechat.app.appid"],
 		config.All["wechat.app.secret"])
-	resp, _ := resty.R().Get(apiBase)
+	resp, err := resty.R().Get(apiBase)
+	if err != nil {
+		return err
+	}
 
 	// save log
 	log := orm.WechatLog{
