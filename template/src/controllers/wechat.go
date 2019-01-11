@@ -12,6 +12,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Wechat controller
+type Wechat struct{}
+
 // WeChatLogin will return the openid by given code
 // @Summary 小程序登录
 // @Description 小程序登录
@@ -23,7 +26,7 @@ import (
 // @Failure 400 {object} vo.Error
 // @Router /wechat/login [get]
 // @Tags weapp,login
-func WeChatLogin(c *gin.Context) {
+func (*Wechat) (*Wechat) func (*Wechat) WeChatLogin(c *gin.Context) {
 	// appid := config.All["wechat.app.appid"]
 	// secret := config.All["wechat.app.secret"]
 	code := c.Query("code")
@@ -59,7 +62,7 @@ func WeChatLogin(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Router /wechat/getphonenumber [post]
 // @Tags weapp
-func WechatGetPhoneNumber(c *gin.Context) {
+func (*Wechat) WechatGetPhoneNumber(c *gin.Context) {
 	var wxData vo.WXData
 	if err := c.ShouldBind(&wxData); err != nil {
 		renderError(c, err)
@@ -89,7 +92,7 @@ func WechatGetPhoneNumber(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Router /wechat/getuserinfo [post]
 // @Tags weapp
-func WechatGetUserInfo(c *gin.Context) {
+func (*Wechat) WechatGetUserInfo(c *gin.Context) {
 	var wxData vo.WXData
 	if err := c.ShouldBind(&wxData); err != nil {
 		renderError(c, err)
@@ -127,7 +130,7 @@ func WechatGetUserInfo(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Router /wechat/storeformid [post]
 // @Tags weapp
-func StoreWechatFormID(c *gin.Context) {
+func (*Wechat) StoreWechatFormID(c *gin.Context) {
 	userID := getLoginContext(c).UserID
 
 	var data vo.FormID
