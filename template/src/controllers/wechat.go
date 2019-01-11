@@ -26,7 +26,7 @@ type Wechat struct{}
 // @Failure 400 {object} vo.Error
 // @Router /wechat/login [get]
 // @Tags weapp,login
-func (*Wechat) (*Wechat) func (*Wechat) WeChatLogin(c *gin.Context) {
+func (*Wechat) WeChatLogin(c *gin.Context) {
 	// appid := config.All["wechat.app.appid"]
 	// secret := config.All["wechat.app.secret"]
 	code := c.Query("code")
