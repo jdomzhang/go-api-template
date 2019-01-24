@@ -1,5 +1,5 @@
 var shell = require('shelljs');
-process.env.port  = 5001
+process.env.port  = {{prodport}}
 process.env["GIN_MODE"] = "release"
 shell.echo('=========================================================');
 shell.echo('=======*starting prod*=========');
