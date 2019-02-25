@@ -3,7 +3,7 @@ Description={{description}}
 After=network.target
 
 [Service]
-Type=forking
+#Type=forking
 User=root
 Restart=always
 RemainAfterExit=no
