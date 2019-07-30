@@ -52,7 +52,7 @@ func AuthorizeWXPhoneNumber(rawData vo.WXData, userID uint64) (*orm.User, error)
 			// write to database
 			mobile := vl["phoneNumber"]
 			user.Mobile = mobile
-			user.IsMobileValidated = true
+			user.IsMobileValidated = 1
 
 			if err := user.Update(&user); err != nil {
 				return nil, err
