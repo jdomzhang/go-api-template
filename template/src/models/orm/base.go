@@ -134,12 +134,7 @@ func (*EmptyOrmModel) CreateOrUpdate(obj interface{}) error {
 
 // Update orm entity
 func (*EmptyOrmModel) Update(obj interface{}) error {
-	if rowsAffected := db.Save(obj).RowsAffected; rowsAffected == 0 {
-		typeName := reflect.TypeOf(obj)
-		return fmt.Errorf("Could not Update the obj[%s]", typeName.String())
-	}
-
-	return nil
+	return db.Save(obj).Error
 }
 
 // Get orm entity by id
