@@ -12,7 +12,7 @@ or, if you have `scoop` installed on windows
 
 ## `fresh` - live reload
 
-> go get -u github.com/pilu/fresh
+> go get -u github.com/jdomzhang/fresh
 
 ## 'goconvey'
 > go get -v github.com/smartystreets/goconvey
