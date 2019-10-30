@@ -1,147 +1,140 @@
 package biz
 
 import (
-	"encoding/json"
-	"errors"
-	"fmt"
-	"strings"
-
-	"{{name}}/src/models/enc"
 	"{{name}}/src/models/orm"
-	"{{name}}/src/models/vo"
+	"{{name}}/src/models/primitive"
+	"{{name}}/src/models/wechat"
 )
 
-// GetOrCreateUser will get user by given wechat openid, or create if not found
-func GetOrCreateUser(user *orm.User, wechatSessionKey, wechatOpenID, wechatUnionID string) error {
-	// check wechat session key & openid
-	if ok := wechatSessionKey != "" && wechatOpenID != ""; !ok {
-		return fmt.Errorf("wechat sessionkey [%s] and openid [%s] should both have value", wechatSessionKey, wechatOpenID)
-	}
+// User is a biz processor
+type User struct{}
 
-	var entity orm.User
-	if err := entity.FindByWechatOpenID(user, wechatOpenID); err != nil {
-		user.WechatSessionKey = wechatSessionKey
-		user.WechatOpenID = wechatOpenID
-		user.WechatUnionID = wechatUnionID
+// default biz object
+var bizUser User
 
-		return entity.Create(user)
-	}
-
-	// update wechat session key
-	user.WechatSessionKey = wechatSessionKey
-	user.WechatUnionID = wechatUnionID
-	return entity.Update(user)
+func (obj *User) get(ormObj *orm.User, id uint64, preloads ...string) error {
+	// do not change below line, it is for simple get
+	// you may change it in Get method instead
+	return ormObj.Get(ormObj, id, preloads...)
 }
 
-// AuthorizeWXPhoneNumber will save mobile phone number to corresponding user
-func AuthorizeWXPhoneNumber(rawData vo.WXData, userID uint64) (*orm.User, error) {
-	var user orm.User
-	if err := user.Get(&user, userID); err != nil {
-		return nil, nil
+// Get will get an ormObj
+func (obj *User) Get(ormObj *orm.User, id uint64) error {
+	return ormObj.Get(ormObj, id)
+}
+
+// GetAllByPage will return data by page
+func (obj *User) GetAllByPage(list *[]orm.User, pagination *primitive.Pagination) error {
+	var ormEmpty orm.EmptyOrmModel
+	return ormEmpty.GetAllByPage(list, pagination)
+}
+
+// Create will create an ormObj
+func (obj *User) Create(ormObj *orm.User) error {
+	if err := obj.validateAdd(ormObj); err != nil {
+		return err
 	}
 
-	if jsonStr, err := enc.DecryptWXData(user.WechatSessionKey, rawData.IV, rawData.EncryptedData); err != nil {
-		return nil, err
+	if err := ormObj.Create(ormObj); err != nil {
+		return err
+	}
+
+	return obj.Get(ormObj, ormObj.ID)
+}
+
+// Update will update an ormObj
+func (obj *User) Update(ormObj *orm.User) error {
+	if err := obj.validateUpdate(ormObj); err != nil {
+		return err
+	}
+
+	if err := ormObj.Update(ormObj); err != nil {
+		return err
+	}
+
+	return obj.Get(ormObj, ormObj.ID)
+}
+
+// Delete will delete an ormObj
+func (obj *User) Delete(id uint64) error {
+	ormObj := &orm.User{}
+	if err := obj.Get(ormObj, id); err != nil {
+		return err
+	}
+
+	if err := obj.validateDelete(ormObj); err != nil {
+		return err
+	}
+
+	return ormObj.Delete(ormObj)
+}
+
+// LoginUserWithWechatJSCode will login wechat user with given code
+func (*User) LoginUserWithWechatJSCode(code string) (*orm.User, *orm.WechatUser, error) {
+	// var v enc.Values
+	var result wechat.LoginResponse
+	if err := wechat.JSCode2Session(&result, code); err != nil {
+		return nil, nil, err
+	}
+
+	return bizUser.GetRealOrFakeUser(&result)
+
+	// return GetOrCreateUser(user, result.SessionKey, result.OpenID, result.UnionID)
+}
+
+func (*User) GetRealOrFakeUser(result *wechat.LoginResponse) (*orm.User, *orm.WechatUser, error) {
+	user := orm.User{
+		WechatOpenID: result.OpenID,
+	}
+	var wechatUser orm.WechatUser
+
+	// 1. get or create wechat user by openid
+	var ormWechatUser orm.WechatUser
+	if retVal, err := ormWechatUser.ExistByOpenID(result.OpenID); err != nil {
+		// not existing, then create
+		wechatUser = orm.WechatUser{
+			OpenID:     result.OpenID,
+			UnionID:    result.UnionID,
+			SessionKey: result.SessionKey,
+		}
+
+		return &user, &wechatUser, ormWechatUser.Create(&wechatUser)
 	} else {
-		fmt.Println(jsonStr)
-		// return jsonStr, nil
-		// get phone number from jsonStr
-		if vl, err := (enc.Values{}).ParseJSON(jsonStr); err != nil {
-			return nil, err
-		} else {
-			// write to database
-			mobile := vl["phoneNumber"]
-			user.Mobile = mobile
-			user.IsMobileValidated = 1
-
-			if err := user.Update(&user); err != nil {
-				return nil, err
-			}
-
-			return &user, nil
-		}
-	}
-}
-
-// SaveWXUserInfo will save wechat user info to corresponding user
-func SaveWXUserInfo(rawData vo.WXData, userID uint64, openID string) (*orm.User, error) {
-	var user orm.User
-	if err := user.Get(&user, userID); err != nil {
-		// could not find by user id, then find by openid
-		if err := user.FindByWechatOpenID(&user, openID); err != nil {
-			return nil, err
+		wechatUser = *retVal
+		// update wechat user session key
+		wechatUser.SessionKey = result.SessionKey
+		if err := ormWechatUser.Update(&wechatUser); err != nil {
+			return nil, nil, err
 		}
 	}
 
-	if jsonStr, err := enc.DecryptWXData(user.WechatSessionKey, rawData.IV, rawData.EncryptedData); err != nil {
-		return nil, err
-	} else {
-		fmt.Println(jsonStr)
-		// return jsonStr, nil
-		// convert to wechat user
-		var wechatUser orm.WechatUser
-		if err := json.Unmarshal([]byte(jsonStr), &wechatUser); err != nil {
-			return nil, err
-		}
-
-		// set openid
-		wechatUser.OpenID = user.WechatOpenID
-		wechatUser.UnionID = user.WechatUnionID
-		if err := wechatUser.UpdateOrCreateByOpenID(&wechatUser); err != nil {
-			return nil, err
-		}
-
-		// set nickname and avatar
-		user.NickName = wechatUser.NickName
-		user.AvatarURL = wechatUser.AvatarURL
-
-		if err := user.Update(&user); err != nil {
-			return nil, err
-		}
-
-		return &user, nil
-		// }
-	}
-}
-
-// GetUserByID will return user object by given id
-func GetUserByID(id uint64) (*orm.User, error) {
+	// 2. existing wechat user, then check if existing user
 	var ormUser orm.User
-	if err := ormUser.Get(&ormUser, id); err != nil {
-		return nil, err
+	if retVal, err := ormUser.ExistByOpenID(result.OpenID); err == nil {
+		// existing
+		user = *retVal
 	}
 
-	return &ormUser, nil
+	// return, (userID could be 0)
+	return &user, &wechatUser, nil
 }
 
-// StoreWechatFormID will store user formId for later usage
-func StoreWechatFormID(userID uint64, formID string) (*orm.WechatForm, error) {
-	// check formID
-	if formID == "" {
-		return nil, errors.New("formID should not be empty")
-	}
+/*
+ handle business logic here
+*/
 
-	if strings.Index(formID, " ") != -1 {
-		return nil, errors.New("formID should not contain space")
-	}
-
-	// get user
-	var user orm.User
-	if err := user.Get(&user, userID); err != nil {
-		return nil, err
-	}
-
-	form := orm.WechatForm{
-		UserID: userID,
-		OpenID: user.WechatOpenID,
-		FormID: formID,
-	}
-
-	return &form, form.Create(&form)
+func (obj *User) validateAdd(ormObj *orm.User) error {
+	return obj.validate(ormObj)
 }
 
-// DeleteExpiredFormID will delete the form id that has expired (older than 7 days)
-func DeleteExpiredFormID() error {
-	var form orm.WechatForm
-	return form.DeleteExpiredFormID()
+func (obj *User) validateUpdate(ormObj *orm.User) error {
+	return obj.validate(ormObj)
+}
+
+func (obj *User) validateDelete(ormObj *orm.User) error {
+	return nil
+}
+
+func (obj *User) validate(ormObj *orm.User) error {
+	return nil
 }

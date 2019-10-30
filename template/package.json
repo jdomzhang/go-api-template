@@ -13,11 +13,13 @@
     "coverage": "goconvey -workDir src",
     "doc": "node ./build/doc.js",
     "build": "node ./build/build_4_linux.js",
+    "deploy:nginx": "node ./build/deploy_nginx.js",
     "upload": "node ./build/upload.js",
     "upload:weapp": "node ./build/upload-weapp.js",
     "install:all": "node ./build/install-all.js",
     "release": "node ./build/release.js",
-    "release:all": "node ./build/release-all.js"
+    "release:all": "node ./build/release-all.js",
+    "codegen": "hygen go with-prompt"
   },
   "engines": {
     "node": ">= 6.0.0",

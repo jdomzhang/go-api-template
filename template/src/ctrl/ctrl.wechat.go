@@ -1,4 +1,4 @@
-package controllers
+package ctrl
 
 import (
 	"fmt"
@@ -7,7 +7,6 @@ import (
 
 	"{{name}}/src/models/auth"
 	"{{name}}/src/models/biz"
-	"{{name}}/src/models/orm"
 
 	"github.com/gin-gonic/gin"
 )
@@ -36,17 +35,17 @@ func (*Wechat) WeChatLogin(c *gin.Context) {
 		return
 	}
 
-	var user orm.User
-	if err := biz.LoginUserWithWechatJSCode(&user, code); err != nil {
+	var bizUser biz.User
+	if user, _, err := bizUser.LoginUserWithWechatJSCode(code); err != nil {
 		renderError(c, err)
-		return
+	} else {
+		// set token
+		token := auth.GenUserJwt(user)
+		SetHeaderToken(c, token)
+
+		renderJSON(c, &user)
 	}
 
-	// set token
-	token := auth.GenUserJwt(&user)
-	SetHeaderToken(c, token)
-
-	renderJSON(c, &user)
 }
 
 // WechatGetPhoneNumber will get phone number from encrypted wechat data

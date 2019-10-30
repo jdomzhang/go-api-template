@@ -3,15 +3,16 @@ package orm
 // WechatUser is the wechat user object
 type WechatUser struct {
 	OrmModel
-	AvatarURL string `json:"avatarUrl"`
-	City      string `json:"city"`
-	Country   string `json:"country"`
-	Gender    uint64 `json:"gender"`
-	Language  string `json:"language"`
-	NickName  string `json:"nickname"`
-	Province  string `json:"province"`
-	OpenID    string `json:"openid"`
-	UnionID   string `json:"unionid"`
+	AvatarURL  string `json:"avatarUrl"`
+	City       string `json:"city"`
+	Country    string `json:"country"`
+	Gender     uint64 `json:"gender"`
+	Language   string `json:"language"`
+	NickName   string `json:"nickname"`
+	Province   string `json:"province"`
+	OpenID     string `json:"openid"`
+	UnionID    string `json:"unionid"`
+	SessionKey string `json:"-"`
 }
 
 func init() {
@@ -22,4 +23,9 @@ func init() {
 func (*WechatUser) UpdateOrCreateByOpenID(v *WechatUser) error {
 	// important: Assign() would only work with (*v) which is not a pointer
 	return db.Where(WechatUser{OpenID: v.OpenID}).Assign(*v).FirstOrCreate(v).Error
+}
+
+func (*WechatUser) ExistByOpenID(openID string) (*WechatUser, error) {
+	var entity WechatUser
+	return &entity, db.Model(&WechatUser{}).Where("open_id = ?", openID).First(&entity).Error
 }

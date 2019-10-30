@@ -10,5 +10,9 @@ shell.exec('yarn release')
 shell.exec('echo step 2............')
 shell.exec('yarn upload-weapp')
 
+// 3
+shell.exec('echo step 3............')
+shell.exec('yarn deploy:nginx')
+
 // done
 shell.exec('echo done............')

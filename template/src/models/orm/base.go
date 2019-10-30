@@ -9,8 +9,8 @@ import (
 	"{{name}}/src/models/enc"
 	"{{name}}/src/models/primitive"
 
-	// this line must be here, it's to reference pq driver
-	_ "github.com/jinzhu/gorm/dialects/postgres"
+	// this line must be here, it's to reference mysql driver
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 
 	"{{name}}/src/config"
 

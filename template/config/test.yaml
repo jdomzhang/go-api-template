@@ -2,8 +2,8 @@
 logsql:                       true
 port:                         {{devport}}
 JwtSignKey:                   xxxxxxxx_test
-dbdriver:                     postgres
-connectionstring:             user={{dbname}} password={{dbpassword}} dbname={{dbname}} host=localhost port=5432 sslmode=disable
+dbdriver: mysql
+connectionstring: {{dbname}}:{{dbpassword}}@/{{dbname}}?charset=utf8mb4&parseTime=True&loc=Local
 
 token.expire.minutes:         120
 

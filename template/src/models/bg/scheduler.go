@@ -3,7 +3,6 @@ package bg
 import (
 	"fmt"
 	"{{name}}/src/config"
-	"{{name}}/src/models/biz"
 	"{{name}}/src/models/wechat"
 
 	"github.com/jasonlvhit/gocron"
@@ -13,7 +12,6 @@ import (
 func DailyJob() {
 	if config.All["wechat.enable"] == "true" {
 		gocron.Every(1).Minute().Do(refreshGlobalAccessToken)
-		gocron.Every(1).Day().At("3:00").Do(deleteExpiredFormID)
 	}
 
 	_, time := gocron.NextRun()
@@ -21,12 +19,6 @@ func DailyJob() {
 
 	// start and hold on
 	<-gocron.Start()
-}
-
-func deleteExpiredFormID() {
-	fmt.Println("################### triggered daily task - delete expired form id ####################")
-
-	biz.DeleteExpiredFormID()
 }
 
 func refreshGlobalAccessToken() {

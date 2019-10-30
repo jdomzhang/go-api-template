@@ -7,8 +7,8 @@ type WechatLog struct {
 	IO             string
 	URL            string
 	Method         string
-	Request        string `gorm:"type:varchar(2048)"` // mysql
-	Response       string `gorm:"type:varchar(2048)"` // mysql
+	Request        string `sql:"type:text"`
+	Response       string `sql:"type:text"`
 	ResponseStatus int64
 	RefKey         string
 	RefName        string

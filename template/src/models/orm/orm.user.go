@@ -12,15 +12,28 @@ type User struct {
 	Mobile            string `json:"mobile,omitempty"`
 	NickName          string `json:"nickName,omitempty"`
 	AvatarURL         string `json:"avatarUrl,omitempty"`
-	IsMobileValidated uint8  `json:"isMobileValidated,omitempty" sql:"default:0"`
+	IsMobileValidated bool   `json:"isMobileValidated,omitempty" sql:"default:0"`
 	WechatOpenID      string `json:"wechatOpenID,omitempty"`
 	WechatUnionID     string `json:"wechatUnionID,omitempty"`
-	WechatSessionKey  string `json:"-"`
 }
 
 func init() {
 	// Migrate the schema
 	db.AutoMigrate(&User{})
+}
+
+// ExistByOpenID will get the first by openID
+func (*User) ExistByOpenID(openID string) (*User, error) {
+	var value User
+	return &value, db.Model(&User{}).Where("wechat_open_id = ?", openID).First(&value).Error
+}
+
+// FindByMobileAndPassword will return user by given mobile and password
+func (*User) FindByMobileAndPassword(user *User, mobile, password string) error {
+	if rowsAffected := db.Model(&User{}).Where("mobile = ? and password = ?", mobile, password).First(user).RowsAffected; rowsAffected == 0 {
+		return fmt.Errorf("mobile or password is wrong")
+	}
+	return nil
 }
 
 // FindByWechatOpenID will return user by given wechat openid

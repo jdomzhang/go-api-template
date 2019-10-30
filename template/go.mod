@@ -8,6 +8,7 @@ require (
 	github.com/gin-gonic/gin v1.3.0
 	github.com/go-openapi/jsonreference v0.17.2 // indirect
 	github.com/go-openapi/spec v0.17.2 // indirect
+	github.com/go-sql-driver/mysql v1.4.1 // indirect
 	github.com/golang/protobuf v1.2.0 // indirect
 	github.com/jasonlvhit/gocron v0.0.0-20180312192515-54194c9749d4
 	github.com/jdomzhang/resty v1.99.0
@@ -28,3 +29,5 @@ require (
 	gopkg.in/go-playground/validator.v8 v8.18.2 // indirect
 	gopkg.in/yaml.v2 v2.2.1
 )
+
+go 1.13

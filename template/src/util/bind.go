@@ -35,3 +35,9 @@ func setA2B(objA, objB interface{}) error {
 
 	return nil
 }
+
+// CopyProperties will copy properties from source to target
+func CopyProperties(source, target interface{}) error {
+	return setA2B(source, target)
+}
+
