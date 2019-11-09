@@ -11,6 +11,8 @@ import (
 // <%=name%> is a biz processor
 type <%=name%> struct{}
 
+var biz<%=name%> <%=name%>;
+
 // Get will get an ormObj
 func (obj *<%=name%>) Get(ormObj *orm.<%=name%>, id uint64) error {
 	return ormObj.Get(ormObj, id)
