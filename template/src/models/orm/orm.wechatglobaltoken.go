@@ -20,7 +20,7 @@ func init() {
 
 // GetValidLatest returns valid latest entity
 func (*WechatGlobalAccessToken) GetValidLatest(entity *WechatGlobalAccessToken) error {
-	rowsAffected := db.Where("err_code = 0 and created_at + cast(expires_in || ' seconds' as interval) > now()").Order("id desc").First(&entity).RowsAffected
+	rowsAffected := db.Where("err_code = 0 and created_at + expires_in > now()").Order("id desc").First(&entity).RowsAffected
 
 	if rowsAffected == 0 {
 		return fmt.Errorf("Could not find the WechatGlobalAccessToken")
