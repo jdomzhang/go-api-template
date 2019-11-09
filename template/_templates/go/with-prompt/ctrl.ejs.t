@@ -17,6 +17,8 @@ import (
 // <%=name%> is a controller
 type <%=name%> struct{}
 
+var biz<%=name%> biz.<%=name%>
+
 // GetByID is gin controller
 func (*<%=name%>) GetByID(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
