@@ -18,6 +18,11 @@ func (obj *<%=name%>) Get(ormObj *orm.<%=name%>, id uint64) error {
 	return ormObj.Get(ormObj, id)
 }
 
+// get will get an ormObj with preload
+func (obj *<%=name%>) get(ormObj *orm.<%=name%>, id uint64, preload ...string) error {
+	return ormObj.Get(ormObj, id, preload...)
+}
+
 // GetAllByPage will return data by page
 func (obj *<%=name%>) GetAllByPage(list *[]orm.<%=name%>, pagination *primitive.Pagination) error {
 	var ormEmpty orm.EmptyOrmModel
