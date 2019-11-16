@@ -5,6 +5,6 @@ import (
 	"testing"
 )
 
-func GeneralTest(t *testing.T) {
+func TestGeneral(t *testing.T) {
 	fmt.Println("do something..., done!")
 }
